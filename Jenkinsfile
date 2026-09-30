@@ -23,16 +23,10 @@ pipeline {
             }
         }
 
-        stage('Stop Old Container') {
+        stage('Run Docker Container') {
             steps {
-                sh 'docker stop gst-invoice-app || true'
-                sh 'docker rm gst-invoice-app || true'
-            }
-        }
-
-        stage('Run Container') {
-            steps {
-                sh 'docker run -d --name gst-invoice-app -p 8080:8080 gst-invoice-app:latest'
+                sh 'docker rm -f gst-invoice-app || true'
+                sh 'docker run --name gst-invoice-app gst-invoice-app:latest'
             }
         }
     }
